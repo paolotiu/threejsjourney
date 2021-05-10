@@ -14,14 +14,12 @@ export const main = () => {
     canvas: document.querySelector("#webgl") as HTMLCanvasElement,
   });
   renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
 
   const geometry = new THREE.BoxGeometry();
-  const material = new THREE.MeshStandardMaterial({
+  const material = new THREE.MeshPhongMaterial({
     color: "blue",
     emissive: "white",
-    emissiveIntensity: 0.1,
-    roughness: 0.2,
+    emissiveIntensity: 0,
   });
   const cube = new THREE.Mesh(geometry, material);
   scene.add(cube);
@@ -62,11 +60,14 @@ export const main = () => {
   controls.addEventListener("change", render);
   controls.minDistance = 1;
   controls.maxDistance = 50;
-  controls.enablePan = false;
 
   function render() {
     renderer.render(scene, camera);
   }
 
   render();
+
+  return () => {
+    controls.removeEventListener("change", render);
+  };
 };

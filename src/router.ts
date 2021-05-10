@@ -23,10 +23,14 @@ const router = (() => {
 
   const createAnchors = () => {
     Object.keys(map).forEach((key) => {
+      if (key.charAt(0) !== "/") {
+        return;
+      }
       const a = document.createElement("a");
+      const div = document.querySelector(".links") as HTMLDivElement;
       a.href = key;
       a.innerText = key;
-      document.body.appendChild(a);
+      div.appendChild(a);
     });
   };
 

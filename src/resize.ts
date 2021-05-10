@@ -1,11 +1,12 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
-export const camera = () => {
+export const resize = () => {
+  const canvas = document.querySelector("#webgl") as HTMLCanvasElement;
   // Sizes
   const sizes = {
-    width: 800,
-    height: 600,
+    width: window.innerWidth,
+    height: window.innerHeight,
   };
 
   /**
@@ -15,6 +16,7 @@ export const camera = () => {
     x: 0,
     y: 0,
   };
+
   window.addEventListener("mousemove", (e) => {
     cursor.x = e.clientX / sizes.width - 0.5;
     cursor.y = -(e.clientY / sizes.height - 0.5);
@@ -43,11 +45,48 @@ export const camera = () => {
   // camera.lookAt(cubeMesh.position);
   scene.add(camera);
 
+  // Handle resize
+  const handleResize = () => {
+    sizes.width = window.innerWidth;
+    sizes.height = window.innerHeight;
+    camera.aspect = sizes.width / sizes.height;
+    camera.updateProjectionMatrix();
+
+    // update renderer
+    renderer.setSize(sizes.width, sizes.height);
+    renderer.setPixelRatio(Math.min(2, window.devicePixelRatio));
+  };
+  window.addEventListener("resize", handleResize);
+
+  // Double CLick listener
+  const handleDblClick = () => {
+    const fullscreenElement =
+      document.fullscreenElement ||
+      ((document as any).webkitFullscreen as Element | null);
+    if (!fullscreenElement) {
+      if (canvas.requestFullscreen) {
+        canvas.requestFullscreen();
+      } else if ((canvas as any).webkitRequestFullscreen) {
+        (canvas as any).webkitRequestFullscreen();
+      }
+
+      return;
+    }
+
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if ((document as any).webkitExitFullscreen) {
+      (document as any).webkitExitFullscreen();
+    }
+  };
+  window.addEventListener("dblclick", handleDblClick);
+
   // Renderer
   const renderer = new THREE.WebGLRenderer({
-    canvas: document.querySelector("#webgl") as HTMLCanvasElement,
+    canvas,
   });
   renderer.setSize(sizes.width, sizes.height);
+  renderer.setPixelRatio(Math.min(2, window.devicePixelRatio));
   renderer.render(scene, camera);
 
   // Controls
@@ -79,7 +118,7 @@ export const camera = () => {
 
   return () => {
     isActive = false;
-    cubeGeometry.dispose();
-    cubeMaterial.dispose();
+    window.removeEventListener("resize", handleResize);
+    window.removeEventListener("dblclick", handleDblClick);
   };
 };
