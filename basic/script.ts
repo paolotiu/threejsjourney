@@ -3,7 +3,7 @@ import * as THREE from "https://cdn.skypack.dev/three@v0.128.0-4xvsPydvGvI2Nx1Gb
 // Scene
 const scene = new THREE.Scene();
 
-// Red cub
+// Red cube
 const geometry = new THREE.BoxGeometry(1, 1, 1);
 const material = new THREE.MeshBasicMaterial({
   color: 0xff0000,

@@ -18,8 +18,8 @@ body {
 
 .links {
   position: relative;
-  z-index: 1;
   display: flex;
+  width: fit-content;
   gap: 1rem;
 }
 
