@@ -8,6 +8,7 @@ import { resize } from "./resize";
 import { geometry } from "./geometry";
 import { debug } from "./debug";
 import { textures } from "./textures";
+import { materials } from "./materials";
 
 router.on("/basic", main);
 router.on("/transform", transform);
@@ -17,6 +18,7 @@ router.on("/resize", resize);
 router.on("/geometry", geometry);
 router.on("/debug", debug);
 router.on("/textures", textures);
+router.on("/materials", materials);
 
 router.run();
 
