@@ -28,7 +28,15 @@ export const debug = () => {
 
   // Red cube
   const geometry = new THREE.BoxBufferGeometry(1, 1, 1);
-  const material = new THREE.MeshBasicMaterial();
+  const loader = new THREE.TextureLoader();
+  const material = new THREE.MeshStandardMaterial({
+    map: loader.load("wood/color.jpg"),
+    normalMap: loader.load("padded/normal.jpg"),
+  });
+
+  const pointlight = new THREE.PointLight();
+  pointlight.position.z = 2;
+  scene.add(pointlight);
   const mesh = new THREE.Mesh(geometry, material);
   scene.add(mesh);
 

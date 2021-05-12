@@ -6,8 +6,9 @@ const path = require("path");
 module.exports = {
   entry: path.resolve(__dirname, "../src/index.ts"),
   output: {
-    filename: "bundle.[contenthash].js",
+    filename: "bundle.js",
     path: path.resolve(__dirname, "../dist"),
+    publicPath: "/",
   },
   devtool: "source-map",
   plugins: [
@@ -16,7 +17,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "../src/index.html"),
-      minify: true,
+      filename: "index.html",
     }),
     new MiniCSSExtractPlugin(),
   ],
@@ -47,7 +48,7 @@ module.exports = {
       // CSS
       {
         test: /\.css$/,
-        use: [MiniCSSExtractPlugin.loader, "css-loader"],
+        use: ["style-loader", "css-loader"],
       },
 
       // Images

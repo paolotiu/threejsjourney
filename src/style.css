@@ -17,7 +17,9 @@ body {
 }
 
 .links {
-  position: relative;
+  position: absolute;
+  bottom: 0;
+  left: 0;
   display: flex;
   width: fit-content;
   gap: 1rem;
