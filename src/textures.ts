@@ -151,6 +151,7 @@ export const textures = () => {
   tick();
 
   return () => {
+    gui.destroy();
     isActive = false;
   };
 };
